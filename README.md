@@ -10,6 +10,7 @@ npm install nativewind tailwindcss react-native-reanimated react-native-safe-are
 
 npx tailwind init
 
+npx expo customize metro.config.js
 
 
 
