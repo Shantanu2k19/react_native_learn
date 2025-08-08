@@ -1,3 +1,60 @@
+#commands 
+npx create-expo-app@latest  #create project 
+
+npx expo start #run project 
+
+npm run reset-project  #reset prject 
+
+npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context 
+
+
+npx tailwind init
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
