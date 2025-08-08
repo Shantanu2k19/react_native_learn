@@ -52,8 +52,7 @@ npx expo customize metro.config.js
 
 
 
-
-
+Project based on: https://www.youtube.com/watch?v=f8Z9JyB2EIE&t=1247s
 
 
 # Welcome to your Expo app 👋
