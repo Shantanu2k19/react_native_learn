@@ -1,4 +1,8 @@
-#commands 
+##shortcuts 
+rnfes : for react native boilerplate shortcut 
+
+
+##commands 
 npx create-expo-app@latest  #create project 
 
 npx expo start #run project 
@@ -14,17 +18,29 @@ npx expo customize metro.config.js
 
 
 
+##Notes 
+**_layout.tsx (underscore prefix)**
+Special filename in Expo Router
+
+Acts as a default layout wrapper for all sibling and nested routes in the same folder.
+
+Every screen in that folder will be rendered inside whatever <Slot /> you put in _layout.tsx.
 
 
 
+**layout.tsx (no underscore)**
+Just a normal component file named layout.tsx.
+
+Not automatically recognized as a special wrapper by Expo Router.
+
+It only works as a layout if you explicitly import and use it in your screens.
+
+<Tabs> #create a bottom bar 
+
+<Tabs.Screen> #Represents one tab/page in your app.
 
 
-
-
-
-
-
-
+() # files nside parenthesis are routes 
 
 
 
