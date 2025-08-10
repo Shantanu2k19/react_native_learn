@@ -39,7 +39,7 @@ export default function Index() {
         {moviesLoading || trendingLoading ? (
           <ActivityIndicator size="large" color="#0000ff" className="mt-10 self-center" />
         ) : moviesError || trendingLoading ? (
-          <Text> Error: {moviesError?.message || trendingLoading?.message}</Text>
+          <Text> Error: {moviesError || trendingLoading}</Text>
         ) :
           <View className="flex-1 mt-5">
             <SearchBar 
@@ -62,7 +62,7 @@ export default function Index() {
                       <TrendingCard movie={item} index={index}/>
                     )
                   }
-                  keyExtractor={(item) => item.movie_id.toString()}
+                  keyExtractor={(item) => `trending-${item.movie_id}`}
                 />
               </View>
             )}
@@ -75,7 +75,7 @@ export default function Index() {
                 renderItem={({ item }) => (
                   <MovieCard {...item}/>
                 )}
-                keyExtractor={(item) => item.id.toString()} 
+                keyExtractor={(item) => `latest-${item.id}`} 
                 numColumns={3}
                 columnWrapperStyle={{ 
                   justifyContent: "flex-start",
