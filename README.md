@@ -18,6 +18,9 @@ npx expo customize metro.config.js
 
 npm i @react-native-masked-view/masked-view
 
+#for build: 
+eas build -p android --profile preview --local
+
 ##Notes 
 **_layout.tsx (underscore prefix)**
 Special filename in Expo Router
