@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "wanderlust",
-    "slug": "wanderlust",
+    "name": "movie_app",
+    "slug": "movie_app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
-    "scheme": "wanderlust",
+    "scheme": "movie_app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

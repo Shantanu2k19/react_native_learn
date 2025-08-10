@@ -3,10 +3,10 @@ import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchPopularMovies } from "@/services/api";
+import { updateSearchCount } from "@/services/appwrite";
 import usefetch from "@/services/usefetch";
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, Text, View } from 'react-native';
-// import { updateSearchCount } from "@/services/appwrite"
+import { FlatList, Image, Text, View } from 'react-native';
 
 const search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,25 +19,23 @@ const search = () => {
       reset,
     }= usefetch(() => {
       console.log("Calling fetchPopularMovies");
-      return fetchPopularMovies({ query: "" });
+      return fetchPopularMovies({ query: searchQuery });
     });
 
   const handleSearch = (text : string) => {
-    console.log(text)
     setSearchQuery(text);
   }
 
   //Debounce search effect 
-  useEffect(() => {
-    console.log('querry changed')
+  useEffect(() => {    
     const timeoutId = setTimeout(async () => {
       if(searchQuery.trim()){
         await loadMovies();
 
-        //call updateSearchCount only if there are results 
-        // if(movies?.length!>0 && movies?.[0]){
-        //   await updateSearchCount(searchQuery, movies[0]);
-        // }
+        // call updateSearchCount only if there are results 
+        if(movies?.length!>0 && movies?.[0]){
+          await updateSearchCount(searchQuery, movies[0]);
+        }
       }
       else {
         reset();
@@ -76,7 +74,16 @@ const search = () => {
               />
             </View>
 
-            {loading && <ActivityIndicator size="large" color="#0000ff" className="my-3" />}
+            {!loading &&
+              !error &&
+              searchQuery.trim() &&
+              movies?.length! > 0 && (
+                <Text className="text-xl text-white font-bold">
+                  Search Results for{" "}
+                  <Text className="text-accent">{searchQuery}</Text>
+                </Text>
+              )
+            }
 
             {error && (
               <Text className="text-red-500 px-5 my-3">
