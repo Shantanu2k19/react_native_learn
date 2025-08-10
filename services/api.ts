@@ -12,6 +12,7 @@ export const fetchPopularMovies = async({ query }:{ query: string}) => {
     ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
     : `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`;
     
+    console.log(endpoint)
     const response = await fetch(endpoint, {
         method: 'GET',
         headers: TMDB_CONFIG.headers,
@@ -19,10 +20,11 @@ export const fetchPopularMovies = async({ query }:{ query: string}) => {
 
     if (!response.ok) {
         // @ts-ignore
+        console.log('error returned')
         throw new Error(`Error fetching movies: ${response.statusText}`);
-        
     }
-
+    
     const data = await response.json();
+    console.log('data returned')
     return data.results;
 }
