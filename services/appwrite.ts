@@ -60,7 +60,7 @@ export const getTrendingMovies = async(): Promise<TrendingMovie[] | undefined> =
             Query.limit(20), // Get more documents to filter from
             Query.orderDesc('count')
         ])
-        console.log("results: ", result)
+        // console.log("results: ", result)
         
         // Remove duplicates based on movie_id and return top 5
         const uniqueMovies = result.documents.reduce((acc: any[], current) => {
