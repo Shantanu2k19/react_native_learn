@@ -16,7 +16,7 @@ npx tailwind init
 
 npx expo customize metro.config.js
 
-
+npm i @react-native-masked-view/masked-view
 
 ##Notes 
 **_layout.tsx (underscore prefix)**
