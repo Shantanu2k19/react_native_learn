@@ -2,7 +2,7 @@
 
 A production-ready, scalable React Native movie application built with Expo and TypeScript, following senior development best practices.
 
-## 🚀 Features
+## Features
 
 - **Modern Architecture**: Built with React Native, Expo, and TypeScript
 - **Type Safety**: Comprehensive TypeScript interfaces and type definitions
@@ -13,7 +13,7 @@ A production-ready, scalable React Native movie application built with Expo and 
 - **API Integration**: TMDB API integration with proper error handling
 - **Custom Hooks**: Reusable hooks for data fetching and state management
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: React Native 0.79.5
 - **Expo**: ~53.0.20
@@ -24,11 +24,11 @@ A production-ready, scalable React Native movie application built with Expo and 
 - **API**: TMDB Movie Database API
 - **Development**: ESLint, Prettier
 
-## 📱 Screenshots
+## Screenshots
 
 [Add your app screenshots here]
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 react_native_learn/
@@ -67,7 +67,7 @@ react_native_learn/
 └── [config files]          # Configuration files
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -126,7 +126,7 @@ react_native_learn/
    npm run web
    ```
 
-## 🔧 Development
+## Development
 
 ### Available Scripts
 
@@ -164,11 +164,11 @@ This project follows strict coding standards:
 - Use React.memo for performance optimization
 - Follow the established naming conventions
 
-## 🧪 Testing
+## Testing
 
 [Add testing setup and instructions here]
 
-## 📦 Building for Production
+## Building for Production
 
 ### Android
 
@@ -187,7 +187,7 @@ expo build:android -t app-bundle
 expo build:ios
 ```
 
-## 🚀 Deployment
+## Deployment
 
 ### Expo Application Services (EAS)
 
@@ -212,14 +212,14 @@ expo build:ios
    eas submit --platform all
    ```
 
-## 🔒 Security
+## Security
 
 - API keys are stored in environment variables
 - No sensitive data in source code
 - Proper error handling without exposing internal details
 - Input validation on all user inputs
 
-## 📊 Performance
+## Performance
 
 - Lazy loading of images
 - Memoized components to prevent unnecessary re-renders
@@ -227,7 +227,7 @@ expo build:ios
 - Optimized image sizes based on device capabilities
 - Debounced search functionality
 
-## 🌐 API Integration
+## API Integration
 
 ### TMDB API
 
@@ -245,7 +245,7 @@ The app integrates with The Movie Database (TMDB) API:
 - `GET /movie/{id}` - Get movie details
 - `GET /trending/movie/{time_window}` - Get trending movies
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -261,18 +261,18 @@ The app integrates with The Movie Database (TMDB) API:
 - Include accessibility features
 - Write meaningful commit messages
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Expo](https://expo.dev/) for the amazing development platform
 - [TMDB](https://www.themoviedb.org/) for the movie database API
 - [React Native](https://reactnative.dev/) community
 - [NativeWind](https://www.nativewind.dev/) for Tailwind CSS support
 
-## 📞 Support
+## Support
 
 If you have any questions or need help:
 
@@ -280,7 +280,7 @@ If you have any questions or need help:
 - Check the [Expo documentation](https://docs.expo.dev/)
 - Review the [React Native documentation](https://reactnative.dev/docs/getting-started)
 
-## 🔄 Changelog
+## Changelog
 
 ### Version 1.0.0
 - Initial production-ready release
@@ -293,4 +293,4 @@ If you have any questions or need help:
 
 ---
 
-**Happy coding! 🎬✨**
+**Happy coding!**

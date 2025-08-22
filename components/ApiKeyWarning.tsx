@@ -16,7 +16,7 @@ const ApiKeyWarning: React.FC<ApiKeyWarningProps> = ({ onRetry }) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>🔑 API Key Required</Text>
+        <Text style={styles.title}>API Key Required</Text>
         <Text style={styles.message}>
           To use this app, you need to configure your TMDB API key. This app cannot function without it.
         </Text>

@@ -35,7 +35,7 @@ export function useFetch<T>(
   const execute = useCallback(async () => {
     // Don't retry if we have a configuration error
     if (hasConfigurationError.current && preventInfiniteRetry) {
-      console.warn('⚠️ Skipping API call due to configuration error');
+      console.warn('Warning: Skipping API call due to configuration error');
       return;
     }
 
@@ -71,7 +71,7 @@ export function useFetch<T>(
         setError(appError.message);
         setLoading(false);
         onError?.(appError);
-        console.error('🚫 Configuration error detected, preventing further retries');
+        console.error('Blocked: Configuration error detected, preventing further retries');
         return;
       }
 
@@ -82,13 +82,13 @@ export function useFetch<T>(
       // Retry logic for network errors only (not configuration errors)
       if (isNetworkError(err) && retryCountRef.current < retryCount && !hasConfigurationError.current) {
         retryCountRef.current++;
-        console.warn(`🔄 Retrying... (${retryCountRef.current}/${retryCount})`);
+        console.warn(`Retrying... (${retryCountRef.current}/${retryCount})`);
         
         setTimeout(() => {
           execute();
         }, retryDelay * retryCountRef.current);
       } else if (retryCountRef.current >= retryCount) {
-        console.error('❌ Max retries reached, stopping');
+        console.error('Error: Max retries reached, stopping');
       }
     }
   }, [fetcher, retryCount, retryDelay, onSuccess, onError, preventInfiniteRetry]);

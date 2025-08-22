@@ -13,8 +13,8 @@ export const TMDB_CONFIG: ApiConfig = {
 
 // Validate API configuration
 if (!TMDB_CONFIG.apiKey) {
-  console.error('❌ TMDB API key is not configured! Please set EXPO_PUBLIC_MOVIE_API_KEY in your .env file');
-  console.error('🔑 Get your API key from: https://www.themoviedb.org/settings/api');
+  console.error('Error: TMDB API key is not configured! Please set EXPO_PUBLIC_MOVIE_API_KEY in your .env file');
+  console.error('Key: Get your API key from: https://www.themoviedb.org/settings/api');
 }
 
 // API Response types
@@ -117,7 +117,7 @@ class ApiClient {
       if (currentRetries < this.MAX_RETRIES) {
         this.retryCount.set(requestKey, currentRetries + 1);
         
-        console.warn(`⚠️ API request failed, retrying... (${currentRetries + 1}/${this.MAX_RETRIES})`);
+        console.warn(`Warning: API request failed, retrying... (${currentRetries + 1}/${this.MAX_RETRIES})`);
         
         // Wait before retrying
         await new Promise(resolve => setTimeout(resolve, this.RETRY_DELAY * (currentRetries + 1)));

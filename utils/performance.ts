@@ -47,7 +47,7 @@ class PerformanceMonitor {
 
     // Log in development
     if (__DEV__) {
-      console.log(`⏱️ ${name}: ${metric.duration.toFixed(2)}ms`, metric.metadata);
+      console.log(`${name}: ${metric.duration.toFixed(2)}ms`, metric.metadata);
     }
 
     return metric.duration;
