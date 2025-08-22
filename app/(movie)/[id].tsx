@@ -1,31 +1,27 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
-import {
-  ActivityIndicator,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-import { icons } from "@/constants/icons";
-import { fetchMovieDetails } from "@/services/api";
-import useFetch from "@/services/usefetch";
+import { icons } from '@/constants/icons';
+import { useFetch } from '@/hooks/useFetch';
+import { fetchMovieDetails } from '@/services/api';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface MovieInfoProps {
   label: string;
-  value?: string | number | null;
+  value: string | number | null | undefined;
 }
 
-const MovieInfo = ({ label, value }: MovieInfoProps) => (
-  <View className="flex-col items-start justify-center mt-5">
-    <Text className="text-light-200 font-normal text-sm">{label}</Text>
-    <Text className="text-light-100 font-bold text-sm mt-2">
-      {value || "N/A"}
-    </Text>
-  </View>
-);
+const MovieInfo = ({ label, value }: MovieInfoProps) => {
+  if (value === null || value === undefined) {
+    return null;
+  }
+
+  return (
+    <View className="mt-4">
+      <Text className="text-light-200 text-sm font-medium">{label}</Text>
+      <Text className="text-white text-base mt-1">{value}</Text>
+    </View>
+  );
+};
 
 const MovieDetails = () => {
   const router = useRouter();

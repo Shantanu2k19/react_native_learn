@@ -1,12 +1,13 @@
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
 import "./globals.css";
 
 export default function RootLayout() {
   return (
-    <>
+    <ErrorBoundary>
       <StatusBar hidden={true} />
-
+      
       <Stack>
         <Stack.Screen
           name="(tabs)"
@@ -21,6 +22,6 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-    </>
+    </ErrorBoundary>
   );
 }

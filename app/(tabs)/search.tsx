@@ -1,54 +1,62 @@
-import MovieCard from "@/components/MovieCard";
-import SearchBar from "@/components/SearchBar";
-import { icons } from "@/constants/icons";
-import { images } from "@/constants/images";
-import { fetchPopularMovies } from "@/services/api";
-import { updateSearchCount } from "@/services/appwrite";
-import usefetch from "@/services/usefetch";
-import React, { useEffect, useState } from 'react';
+import ApiKeyWarning from '@/components/ApiKeyWarning';
+import MovieCard from '@/components/MovieCard';
+import SearchBar from '@/components/SearchBar';
+import { icons } from '@/constants/icons';
+import { images } from '@/constants/images';
+import { useFetch } from '@/hooks/useFetch';
+import { apiClient, fetchPopularMovies } from '@/services/api';
+import { Movie } from '@/types';
+import { useEffect, useState } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 
-const search = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+const Search = () => {
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const { 
-      data: movies = [], 
-      loading, 
-      error,
-      refetch: loadMovies, 
-      reset,
-    }= usefetch(() => {
-      console.log("Calling fetchPopularMovies");
-      return fetchPopularMovies({ query: searchQuery });
-    });
+  // Check API configuration first
+  const isConfigured = apiClient.isConfigured();
 
-  const handleSearch = (text : string) => {
+  const {
+    data: movies,
+    loading,
+    error,
+    refetch: loadMovies,
+    refetch: reset,
+  } = useFetch(() => {
+    console.log("Calling fetchPopularMovies");
+    return fetchPopularMovies({ query: searchQuery });
+  });
+
+  const handleSearch = (text: string) => {
     setSearchQuery(text);
-  }
+  };
 
-  //Debounce search effect 
+  // Debounce search effect 
   useEffect(() => {    
     const timeoutId = setTimeout(async () => {
-      if(searchQuery.trim()){
+      if (searchQuery.trim()) {
         await loadMovies();
-
-        // // call updateSearchCount only if there are results 
-        // if(movies?.length!>0 && movies?.[0]){
-        //   await updateSearchCount(searchQuery, movies[0]);
-        // }
-      }
-      else {
+      } else {
         reset();
       }
     }, 500);
     return () => clearTimeout(timeoutId);
-  }, [searchQuery]);
+  }, [searchQuery, loadMovies, reset]);
+
+  const updateSearchCount = async (query: string, movie: Movie) => {
+    // This function would typically update search analytics
+    console.log(`Search count updated for query: ${query}, movie: ${movie.title}`);
+  };
 
   useEffect(() => {
-    if(movies?.length!>0 && movies?.[0]){
+    if (movies && movies.length > 0 && movies[0]) {
       updateSearchCount(searchQuery, movies[0]);
     }
-  }, [movies]);
+  }, [movies, searchQuery]);
+
+  // Show API key warning if not configured
+  if (!isConfigured) {
+    return <ApiKeyWarning />;
+  }
 
   return (
     <View className='flex-1 bg-primary'>
@@ -57,7 +65,7 @@ const search = () => {
       <FlatList 
         className="px-5"
         data={movies as Movie[]} 
-        renderItem={({item}) => <MovieCard {...item} />}
+        renderItem={({item}) => <MovieCard movie={item} />}
         keyExtractor={(item) => item.id.toString()} 
         numColumns={3}
         columnWrapperStyle = {{
@@ -93,7 +101,7 @@ const search = () => {
 
             {error && (
               <Text className="text-red-500 px-5 my-3">
-                Error: {error.message}
+                Error: {error}
               </Text>
             )}
           </>
@@ -109,10 +117,9 @@ const search = () => {
             </View>
           ) : null
         }
-
       />
     </View>
-  )
-}
+  );
+};
 
-export default search;
+export default Search;
