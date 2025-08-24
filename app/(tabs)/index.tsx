@@ -2,14 +2,12 @@ import ApiKeyWarning from '@/components/ApiKeyWarning';
 import MovieCard from '@/components/MovieCard';
 import SearchBar from '@/components/SearchBar';
 import TrendingCard from '@/components/TrendingCard';
-import { icons } from '@/constants/icons';
-import { images } from '@/constants/images';
 import { useMovieFetch } from '@/hooks/useFetch';
 import { apiClient } from '@/services/api';
 import { Movie, TrendingMovie } from '@/types';
 import { useRouter } from 'expo-router';
 import { useCallback, useMemo } from 'react';
-import { ActivityIndicator, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Index() {
   const router = useRouter();
@@ -18,26 +16,30 @@ export default function Index() {
   const isConfigured = apiClient.isConfigured();
 
   // Fetch trending movies
+  const trendingFetcher = useCallback(() => 
+    // Note: This is a placeholder since the original appwrite service isn't fully implemented
+    // In a real app, you'd use: apiClient.getTrendingMovies()
+    Promise.resolve([])
+  , []);
+
   const {
     data: trendingMovies,
     loading: trendingLoading,
     error: trendingError,
     refetch: refetchTrending
-  } = useMovieFetch<TrendingMovie[]>(() => 
-    // Note: This is a placeholder since the original appwrite service isn't fully implemented
-    // In a real app, you'd use: apiClient.getTrendingMovies()
-    Promise.resolve([])
-  );
+  } = useMovieFetch<TrendingMovie[]>(trendingFetcher);
 
   // Fetch popular movies
+  const popularMoviesFetcher = useCallback(() => 
+    apiClient.getPopularMovies().then(response => response.results)
+  , []);
+
   const {
     data: movies,
     loading: moviesLoading,
     error: moviesError,
     refetch: refetchMovies
-  } = useMovieFetch<Movie[]>(() => 
-    apiClient.getPopularMovies().then(response => response.results)
-  );
+  } = useMovieFetch<Movie[]>(popularMoviesFetcher);
 
   // Handle movie press
   const handleMoviePress = useCallback((movie: Movie) => {
@@ -184,40 +186,42 @@ export default function Index() {
   );
 
   return (
-    <View className="flex-1 bg-primary">
-      <Image 
-        source={images.bg} 
-        className="absolute w-full z-0"
-        accessibilityLabel="Background image"
-      />
+    // <View className="flex-1 bg-primary">
+    //   <Image 
+    //     source={images.bg} 
+    //     className="absolute w-full z-0"
+    //     accessibilityLabel="Background image"
+    //   />
       
-      <ScrollView 
-        className="flex-1 px-5" 
-        showsVerticalScrollIndicator={false} 
-        contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
-        refreshControl={
-          <RefreshControl
-            refreshing={isLoading}
-            onRefresh={handleRefresh}
-            tintColor="#AB8BFF"
-            colors={["#AB8BFF"]}
-          />
-        }
-      >
-        <Image 
-          source={icons.logo} 
-          className="w-12 h-10 mt-20 mb-5 mx-auto"
-          accessibilityLabel="App logo"
-        />
+    //   <ScrollView 
+    //     className="flex-1 px-5" 
+    //     showsVerticalScrollIndicator={false} 
+    //     contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
+    //     refreshControl={
+    //       <RefreshControl
+    //         refreshing={isLoading}
+    //         onRefresh={handleRefresh}
+    //         tintColor="#AB8BFF"
+    //         colors={["#AB8BFF"]}
+    //       />
+    //     }
+    //   >
+    //     <Image 
+    //       source={icons.logo} 
+    //       className="w-12 h-10 mt-20 mb-5 mx-auto"
+    //       accessibilityLabel="App logo"
+    //     />
 
-        {isLoading && !movies && !trendingMovies ? (
-          renderLoading()
-        ) : hasError ? (
-          renderError()
-        ) : (
-          renderContent()
-        )}
-      </ScrollView>
-    </View>
+    //     {isLoading && !movies && !trendingMovies ? (
+    //       renderLoading()
+    //     ) : hasError ? (
+    //       renderError()
+    //     ) : (
+    //       renderContent()
+    //     )}
+    //   </ScrollView>
+    // </View>
+
+    <>Hi</>
   );
 }

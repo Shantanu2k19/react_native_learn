@@ -6,7 +6,7 @@ import { images } from '@/constants/images';
 import { useFetch } from '@/hooks/useFetch';
 import { apiClient, fetchPopularMovies } from '@/services/api';
 import { Movie } from '@/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 
 const Search = () => {
@@ -15,20 +15,21 @@ const Search = () => {
   // Check API configuration first
   const isConfigured = apiClient.isConfigured();
 
+  const fetcher = useCallback(() => {
+    console.log("Calling fetchPopularMovies");
+    return fetchPopularMovies({ query: searchQuery });
+  }, [searchQuery]);
+
   const {
     data: movies,
     loading,
     error,
     refetch: loadMovies,
-    refetch: reset,
-  } = useFetch(() => {
-    console.log("Calling fetchPopularMovies");
-    return fetchPopularMovies({ query: searchQuery });
-  });
+  } = useFetch(fetcher);
 
-  const handleSearch = (text: string) => {
+  const handleSearch = useCallback((text: string) => {
     setSearchQuery(text);
-  };
+  }, []);
 
   // Debounce search effect 
   useEffect(() => {    
@@ -36,22 +37,23 @@ const Search = () => {
       if (searchQuery.trim()) {
         await loadMovies();
       } else {
-        reset();
+        // Reset data when search query is empty
+        setSearchQuery('');
       }
     }, 500);
     return () => clearTimeout(timeoutId);
-  }, [searchQuery, loadMovies, reset]);
+  }, [searchQuery, loadMovies]);
 
-  const updateSearchCount = async (query: string, movie: Movie) => {
+  const updateSearchCount = useCallback(async (query: string, movie: Movie) => {
     // This function would typically update search analytics
     console.log(`Search count updated for query: ${query}, movie: ${movie.title}`);
-  };
+  }, []);
 
   useEffect(() => {
     if (movies && movies.length > 0 && movies[0]) {
       updateSearchCount(searchQuery, movies[0]);
     }
-  }, [movies, searchQuery]);
+  }, [movies, searchQuery, updateSearchCount]);
 
   // Show API key warning if not configured
   if (!isConfigured) {

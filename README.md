@@ -294,3 +294,22 @@ If you have any questions or need help:
 ---
 
 **Happy coding!**
+
+
+
+if issues:
+check java version, install 
+install android studio 
+export ANDROID_HOME=$HOME/Android/Sdk
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
+Run:
+echo $ANDROID_HOME
+You should see:
+/home/<your-username>/Android/Sdk
+
+verify: 
+echo $ANDROID_HOME
+
+finally give as parameter if still not found
+ANDROID_HOME=$HOME/Android/Sdk ANDROID_SDK_ROOT=$HOME/Android/Sdk eas build --platform android --local

@@ -2,7 +2,7 @@
 // fetchMovieDetails,
 import { useEffect, useState } from 'react';
 
-const usefetch = <T>( fetchFunction:() => Promise<T>, autoFetch = true) => {
+const usefetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -11,11 +11,18 @@ const usefetch = <T>( fetchFunction:() => Promise<T>, autoFetch = true) => {
         try {
             setLoading(true);
             setError(null);
+            
+            // Validate fetchFunction
+            if (typeof fetchFunction !== 'function') {
+                throw new Error('Invalid fetch function provided');
+            }
+            
             const result = await fetchFunction();
             setData(result);
         } catch (err) {
-            // @ts-ignore 
-            setError(err instanceof Error ? err : new Error('An unexpected error occurred'));
+            const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+            console.error('useFetch error:', err);
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -28,7 +35,7 @@ const usefetch = <T>( fetchFunction:() => Promise<T>, autoFetch = true) => {
     }
 
     useEffect(() => {
-        if(autoFetch) {
+        if (autoFetch) {
             fetchData();
         }
     }, []);

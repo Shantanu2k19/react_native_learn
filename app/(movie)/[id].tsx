@@ -2,6 +2,7 @@ import { icons } from '@/constants/icons';
 import { useFetch } from '@/hooks/useFetch';
 import { fetchMovieDetails } from '@/services/api';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useCallback } from 'react';
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -27,9 +28,11 @@ const MovieDetails = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
 
-  const { data: movie, loading } = useFetch(() =>
+  const fetcher = useCallback(() =>
     fetchMovieDetails(id as string)
-  );
+  , [id]);
+
+  const { data: movie, loading } = useFetch(fetcher);
 
   if (loading)
     return (
